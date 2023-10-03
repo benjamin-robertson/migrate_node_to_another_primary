@@ -1,0 +1,15 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Merges existing trusted fact",
+  "parameters": {
+    "trusted_facts": {
+      "description": "Trusted facts to add",
+      "type": "Hash"
+    },
+    "preserve_existing_facts": {
+      "description": "Preserve existing trusted facts",
+      "type": "Boolean"
+    }
+  }
+}

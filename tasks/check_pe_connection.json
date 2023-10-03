@@ -1,0 +1,22 @@
+{
+    "description": "Confirms if a PE server is accessible from a node",
+    "input_method": "environment",
+    "implementations": [
+        {"name": "check_pe_connection.sh", "requirements": ["shell"]},
+        {"name": "check_pe_connection.ps1", "requirements": ["powershell"]}
+      ],
+    "parameters": {
+        "target_pe_server": {
+            "description": "PE server to check connection to",
+            "type": "String[1]"
+        },
+        "bypass_connectivity_check": {
+            "description": "Bypass connectivity check, still checks for PE server",
+            "type": "Boolean"
+        },
+        "test_enum": {
+            "description": "testing enum",
+            "type": "Enum['choice1','choice2']"
+        }
+    }
+  }

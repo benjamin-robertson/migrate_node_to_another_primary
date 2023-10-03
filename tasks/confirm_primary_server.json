@@ -1,0 +1,15 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "A short description of this task",
+  "parameters": {
+    "pe_primary_server": {
+      "description": "Puppet Primary server hostname",
+      "type": "String"
+    },
+    "ignore_infra_status_error": {
+      "description": "Ignore puppet infra status stderr",
+      "type": "Boolean"
+    }
+  }
+}
