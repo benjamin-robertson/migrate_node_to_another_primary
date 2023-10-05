@@ -31,8 +31,8 @@ def read_trusted_facts(cert_location, trusted_facts_oid)
   certificate = OpenSSL::X509::Certificate.new cert_data
   certificate.extensions.each do |element|
     trusted_facts_oid.each do |name, oid|
-      if element.oid == name or element.oid == oid
-        trusted_fact_results[name] = element.value.to_s.gsub(/^\.\n/, '').gsub(/^\../, '')
+      if element.oid == name || element.oid == oid
+        trusted_fact_results[name] = element.value.to_s.gsub(%r{^\.\n}, '').gsub(%r{^\..}, '')
       end
     end
   end
@@ -65,14 +65,12 @@ end
 def merge_facts(existing_csr, new_trusted_facts)
   if existing_csr.keys.include?('extension_requests')
     combined_facts = existing_csr['extension_requests'].merge(new_trusted_facts)
-    existing_csr['extension_requests'] = combined_facts
-    existing_csr
   else
     existing_csr['extension_requests'] = {}
     combined_facts = existing_csr['extension_requests'].merge(new_trusted_facts)
-    existing_csr['extension_requests'] = combined_facts
-    existing_csr
   end
+  existing_csr['extension_requests'] = combined_facts
+  existing_csr
 end
 
 # Get certificate location
@@ -103,7 +101,7 @@ puts "Existing facts are #{existing_csr}"
 puts "New facts are #{new_trusted_facts}"
 
 # Merge the hash
-if existing_csr == nil or preserve_existing_facts == false
+if existing_csr == nil || preserve_existing_facts == false
   merged_csr = { 'extension_requests' => new_trusted_facts }
 else
   merged_csr = merge_facts(existing_csr, new_trusted_facts)
