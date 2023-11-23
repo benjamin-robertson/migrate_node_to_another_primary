@@ -11,11 +11,11 @@ require 'yaml'
 require 'json'
 
 def get_cert_location
-  if Gem.win_platform?
-    command = "'C:\\Program Files\\Puppet Labs\\Puppet\\bin\\puppet.bat' config print hostcert"
-  else
-    command = '/opt/puppetlabs/bin/puppet config print hostcert'
-  end
+  command = if Gem.win_platform?
+              "'C:\\Program Files\\Puppet Labs\\Puppet\\bin\\puppet.bat' config print hostcert"
+            else
+              '/opt/puppetlabs/bin/puppet config print hostcert'
+            end
   output, status = Open3.capture2(command)
   if status.exitstatus != 0
     puts "failed to get cert location from puppet config command #{status}"
@@ -53,8 +53,8 @@ end
 def get_existing_csr(csr_attr_file_location)
   if File.exist?(csr_attr_file_location)
     begin
-      data = YAML.safe_load(File.read(csr_attr_file_location))
-    rescue => exception
+      YAML.safe_load(File.read(csr_attr_file_location))
+    rescue
       nil
     end
   else
@@ -63,12 +63,10 @@ def get_existing_csr(csr_attr_file_location)
 end
 
 def merge_facts(existing_csr, new_trusted_facts)
-  if existing_csr.keys.include?('extension_requests')
-    combined_facts = existing_csr['extension_requests'].merge(new_trusted_facts)
-  else
+  unless existing_csr.keys.include?('extension_requests')
     existing_csr['extension_requests'] = {}
-    combined_facts = existing_csr['extension_requests'].merge(new_trusted_facts)
   end
+  combined_facts = existing_csr['extension_requests'].merge(new_trusted_facts)
   existing_csr['extension_requests'] = combined_facts
   existing_csr
 end
@@ -86,7 +84,7 @@ csr_attr_file_location = csr_attribute_location
 existing_csr = get_existing_csr(csr_attr_file_location)
 
 # set existing facts, if csr attributes is nil. Create an new hash otherwise add to existing
-if existing_csr == nil
+if existing_csr.nil?
   existing_csr = { 'extension_requests' => existing_facts }
 else
   existing_csr['extension_requests'] = existing_facts
@@ -101,11 +99,11 @@ puts "Existing facts are #{existing_csr}"
 puts "New facts are #{new_trusted_facts}"
 
 # Merge the hash
-if existing_csr == nil || preserve_existing_facts == false
-  merged_csr = { 'extension_requests' => new_trusted_facts }
-else
-  merged_csr = merge_facts(existing_csr, new_trusted_facts)
-end
+merged_csr = if existing_csr.nil? || preserve_existing_facts == false
+               { 'extension_requests' => new_trusted_facts }
+             else
+               merge_facts(existing_csr, new_trusted_facts)
+             end
 
 puts "Combined hash is #{merged_csr}"
 
