@@ -13,7 +13,7 @@
 # @param noop Run the plan in noop mode. Make no changes. 
 # @param bypass_connectivity_check Do not check for connectivity to target PE server.
 #
-plan migrate_note_to_another_primary::migrate_node (
+plan migrate_node_to_another_primary::migrate_node (
   Optional[TargetSpec]  $targets                   = undef,
   Optional[String]      $fact_name                 = undef,
   Optional[String]      $fact_value                = undef,
