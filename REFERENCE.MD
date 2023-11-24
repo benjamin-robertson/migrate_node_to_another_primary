@@ -10,6 +10,7 @@
 * [`clear_ssl_certs`](#clear_ssl_certs): Clears SSL certs from Puppet agent; deletes cert and restart
 * [`confirm_primary_server`](#confirm_primary_server): Task to verify if the server its running on is in fact the Puppet Primary server
 * [`set_csr_attributes`](#set_csr_attributes): Merges existing trusted fact
+* [`set_long_paths_windows`](#set_long_paths_windows): Enable long path support on Windows 2016 or later
 
 ### Plans
 
@@ -91,6 +92,12 @@ Data type: `Boolean`
 
 Preserve existing trusted facts
 
+### <a name="set_long_paths_windows"></a>`set_long_paths_windows`
+
+Enable long path support on Windows 2016 or later
+
+**Supports noop?** true
+
 ## Plans
 
 ### <a name="migrate_nodesmigrate_node"></a>`migrate_nodes::migrate_node`
@@ -114,13 +121,13 @@ The following parameters are available in the `migrate_nodes::migrate_node` plan
 
 Data type: `String`
 
-Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes.
+Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname). Use to purge migrated nodes.
 
 ##### <a name="target_pe_address"></a>`target_pe_address`
 
 Data type: `Variant[String,Array]`
 
-Target Puppet server, either compiler address or FQDN of Primary server.
+Target Puppet server, either compiler address or FQDN of Primary server. Use array to specific multiple compilers.
 
 ##### <a name="targets"></a>`targets`
 
