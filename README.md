@@ -7,7 +7,6 @@ Module containing a plan to migrate nodes from one Puppet Primary server to anot
 1. [Description](#description)
 1. [Setup - The basics of getting started with migrate_nodes](#setup)
     * [What migrate_nodes affects](#what-migrate_nodes-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with migrate_nodes](#beginning-with-migrate_nodes)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Limitations - OS compatibility, etc.](#limitations)
@@ -21,7 +20,7 @@ There is currently no fully automated process to migrate Puppet nodes between Pu
 
 ### What migrate_nodes affects
 
-This modules affects the following
+This modules plan affects the following
 
 * Enables long file path support for Windows
 * Updates csr_attributes.yaml with facts currently present on the agent certificate.
@@ -44,7 +43,7 @@ Run the plan **migrate_nodes::migrate_node** from the Puppet Enterprise console.
 
 **Required parameters**
 - origin_pe_primary_server (String - Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname))
-- target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specific multiple compilers.)
+- target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specify multiple compilers.)
 
 **Optional parameters**
 - targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
@@ -56,11 +55,13 @@ Run the plan **migrate_nodes::migrate_node** from the Puppet Enterprise console.
 
 **Note:** Either targets or fact_name/fact_value must be specified. Cannot specify both.
 
-To specific a trusted fact, use `trusted.extensions.pp_role` etc
+To specific a trusted fact, use fact_name = `trusted.extensions.pp_role`.
 
 ## Limitations
 
-Verified with the following OS\Primary combinations. Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions. Expected to work with all modern Puppet Enterprise releases.
+Verified with the following OS\Primary combinations. 
+Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions. 
+Expected to work with all modern Puppet Enterprise releases.
 
 Puppet Enterprise
 
