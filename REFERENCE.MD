@@ -13,7 +13,7 @@
 
 ### Plans
 
-* [`migrate_nodes::migrate_node`](#migrate_nodesmigrate_node): PE plan to migrate nodes to a new PE server
+* [`migrate_nodes::migrate_node`](#migrate_nodesmigrate_node): PE plan to migrate nodes to another PE server
 
 ## Tasks
 
@@ -101,14 +101,26 @@ lint:ignore:140chars
 
 The following parameters are available in the `migrate_nodes::migrate_node` plan:
 
+* [`origin_pe_primary_server`](#origin_pe_primary_server)
+* [`target_pe_address`](#target_pe_address)
 * [`targets`](#targets)
 * [`fact_name`](#fact_name)
 * [`fact_value`](#fact_value)
-* [`origin_pe_primary_server`](#origin_pe_primary_server)
-* [`target_pe_address`](#target_pe_address)
 * [`noop`](#noop)
 * [`bypass_connectivity_check`](#bypass_connectivity_check)
 * [`ignore_infra_status_error`](#ignore_infra_status_error)
+
+##### <a name="origin_pe_primary_server"></a>`origin_pe_primary_server`
+
+Data type: `String`
+
+Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes.
+
+##### <a name="target_pe_address"></a>`target_pe_address`
+
+Data type: `Variant[String,Array]`
+
+Target Puppet server, either compiler address or FQDN of Primary server.
 
 ##### <a name="targets"></a>`targets`
 
@@ -135,18 +147,6 @@ Fact value the fact must match.
 NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 
 Default value: ``undef``
-
-##### <a name="origin_pe_primary_server"></a>`origin_pe_primary_server`
-
-Data type: `String`
-
-Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes.
-
-##### <a name="target_pe_address"></a>`target_pe_address`
-
-Data type: `Variant[String,Array]`
-
-Target Puppet server, either compiler address or FQDN of Primary server.
 
 ##### <a name="noop"></a>`noop`
 

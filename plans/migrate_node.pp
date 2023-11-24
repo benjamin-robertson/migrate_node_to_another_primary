@@ -1,14 +1,14 @@
-# @summary PE plan to migrate nodes to a new PE server
+# @summary PE plan to migrate nodes to another PE server
 # 
 # lint:ignore:140chars
 #
+# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes. 
+# @param target_pe_address Target Puppet server, either compiler address or FQDN of Primary server.
 # @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console). 
 #    NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 # @param fact_name Fact name to match nodes by.
 # @param fact_value Fact value the fact must match. 
 #    NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
-# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes. 
-# @param target_pe_address Target Puppet server, either compiler address or FQDN of Primary server.
 # @param noop Run the plan in noop mode. Make no changes. 
 # @param bypass_connectivity_check Do not check for connectivity to target PE server.
 #
