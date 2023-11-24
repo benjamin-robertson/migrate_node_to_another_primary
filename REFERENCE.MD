@@ -13,7 +13,7 @@
 
 ### Plans
 
-* [`migreate_nodes::migrate_node`](#migreate_nodesmigrate_node): PE plan to migrate nodes to a new PE server
+* [`migrate_nodes::migrate_node`](#migrate_nodesmigrate_node): PE plan to migrate nodes to a new PE server
 
 ## Tasks
 
@@ -93,13 +93,13 @@ Preserve existing trusted facts
 
 ## Plans
 
-### <a name="migreate_nodesmigrate_node"></a>`migreate_nodes::migrate_node`
+### <a name="migrate_nodesmigrate_node"></a>`migrate_nodes::migrate_node`
 
 lint:ignore:140chars
 
 #### Parameters
 
-The following parameters are available in the `migreate_nodes::migrate_node` plan:
+The following parameters are available in the `migrate_nodes::migrate_node` plan:
 
 * [`targets`](#targets)
 * [`fact_name`](#fact_name)

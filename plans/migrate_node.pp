@@ -12,7 +12,7 @@
 # @param noop Run the plan in noop mode. Make no changes. 
 # @param bypass_connectivity_check Do not check for connectivity to target PE server.
 #
-plan migreate_nodes::migrate_node (
+plan migrate_nodes::migrate_node (
   Optional[TargetSpec]  $targets                   = undef,
   Optional[String]      $fact_name                 = undef,
   Optional[String]      $fact_value                = undef,
@@ -68,7 +68,7 @@ plan migreate_nodes::migrate_node (
     $origin_pe_primary_target = get_target($origin_pe_primary_server)
 
     # Confirm the origin_pe_primary_server provided is in fact the Primary server for this Puppet installation.
-    $confirm_pe_primary_server_results = run_task('migreate_nodes::confirm_primary_server', $origin_pe_primary_target,
+    $confirm_pe_primary_server_results = run_task('migrate_nodes::confirm_primary_server', $origin_pe_primary_target,
       'pe_primary_server'         => $origin_pe_primary_target.name,
       'ignore_infra_status_error' => $ignore_infra_status_error,
     '_catch_errors'               => true )
@@ -88,12 +88,12 @@ plan migreate_nodes::migrate_node (
     }
 
     # Test connection to new PE server
-    $connection_check_results = run_task('migreate_nodes::check_pe_connection', $remove_any_pe_targets, { 'target_pe_server' => $target_pe_first_address, 'bypass_connectivity_check' => $bypass_connectivity_check, '_catch_errors' => true })
+    $connection_check_results = run_task('migrate_nodes::check_pe_connection', $remove_any_pe_targets, { 'target_pe_server' => $target_pe_first_address, 'bypass_connectivity_check' => $bypass_connectivity_check, '_catch_errors' => true })
     $successful_connection_test_targets = $connection_check_results.ok_set.names
     $failed_connection_test_targets = $connection_check_results.error_set.names
 
     # Generate new csr file for host.
-    $set_csr_attriubes_results = run_task('migreate_nodes::set_csr_attributes', $successful_connection_test_targets,
+    $set_csr_attriubes_results = run_task('migrate_nodes::set_csr_attributes', $successful_connection_test_targets,
       'trusted_facts'           => {},
       'preserve_existing_facts' => true,
     '_catch_errors'             => true )
@@ -147,7 +147,7 @@ plan migreate_nodes::migrate_node (
     $failed_update_puppet_config = $update_puppet_config_results.error_set.names
 
     # Clear ssl certs
-    $clear_ssl_cert_results = run_task('migreate_nodes::clear_ssl_certs', $successful_update_puppet_config, { '_catch_errors' => true, '_noop' => $noop, 'noop' => $noop })
+    $clear_ssl_cert_results = run_task('migrate_nodes::clear_ssl_certs', $successful_update_puppet_config, { '_catch_errors' => true, '_noop' => $noop, 'noop' => $noop })
     $successful_clear_ssl_cert = $clear_ssl_cert_results.ok_set.names
     $failed_clear_ssl_cert = $clear_ssl_cert_results.error_set.names
 
