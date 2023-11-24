@@ -142,15 +142,11 @@ Data type: `String`
 
 Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes.
 
-Default value: `'ip-172-31-0-172.ap-southeast-2.compute.internal'`
-
 ##### <a name="target_pe_address"></a>`target_pe_address`
 
 Data type: `Variant[String,Array]`
 
 Target Puppet server, either compiler address or FQDN of Primary server.
-
-Default value: `'ip-172-31-35-33.ap-southeast-2.compute.internal'`
 
 ##### <a name="noop"></a>`noop`
 
