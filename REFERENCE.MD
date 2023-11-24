@@ -8,7 +8,7 @@
 
 * [`check_pe_connection`](#check_pe_connection): Confirms if a PE server is accessible from a node
 * [`clear_ssl_certs`](#clear_ssl_certs): Clears SSL certs from Puppet agent; deletes cert and restart
-* [`confirm_primary_server`](#confirm_primary_server): A short description of this task
+* [`confirm_primary_server`](#confirm_primary_server): Task to verify if the server its running on is in fact the Puppet Primary server
 * [`set_csr_attributes`](#set_csr_attributes): Merges existing trusted fact
 
 ### Plans
@@ -53,7 +53,7 @@ noop workaround parameter
 
 ### <a name="confirm_primary_server"></a>`confirm_primary_server`
 
-A short description of this task
+Task to verify if the server its running on is in fact the Puppet Primary server
 
 **Supports noop?** false
 

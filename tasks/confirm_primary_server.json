@@ -1,7 +1,7 @@
 {
   "puppet_task_version": 1,
   "supports_noop": false,
-  "description": "A short description of this task",
+  "description": "Task to verify if the server its running on is in fact the Puppet Primary server",
   "parameters": {
     "pe_primary_server": {
       "description": "Puppet Primary server hostname",
