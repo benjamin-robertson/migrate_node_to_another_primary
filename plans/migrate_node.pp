@@ -13,12 +13,12 @@
 # @param bypass_connectivity_check Do not check for connectivity to target PE server.
 #
 plan migrate_nodes::migrate_node (
+  String                $origin_pe_primary_server,
+  Variant[String,Array] $target_pe_address,
   Optional[TargetSpec]  $targets                   = undef,
   Optional[String]      $fact_name                 = undef,
   Optional[String]      $fact_value                = undef,
   Boolean               $ignore_infra_status_error = false,
-  String                $origin_pe_primary_server  = 'ip-172-31-0-172.ap-southeast-2.compute.internal',
-  Variant[String,Array] $target_pe_address         = 'ip-172-31-35-33.ap-southeast-2.compute.internal',
   Boolean               $noop                      = false,
   Boolean               $bypass_connectivity_check = false,
 ) {

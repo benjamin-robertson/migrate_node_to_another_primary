@@ -1,10 +1,6 @@
 # migrate_nodes
 
-Welcome to your new module. A short overview of the generated parts can be found
-in the [PDK documentation][1].
-
-The README template below provides a starting point with details about what
-information to include in your README.
+Module containing a plan to migrate nodes from one Puppet Primary server to another. Useful for migrations.
 
 ## Table of Contents
 
@@ -19,99 +15,64 @@ information to include in your README.
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your
-module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module
-is what they want.
+There is currently no fully automated process to migrate Puppet nodes between Puppet Primary servers. This plan automates the process while preserving trusted facts contained on the nodes certificate.
 
 ## Setup
 
-### What migrate_nodes affects **OPTIONAL**
+### What migrate_nodes affects
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+This modules affects the following
 
-If there's more that they should know about, though, this is the place to
-mention:
+* Updates csr_attributes.yaml with facts currently present on the agent certificate.
+* Reconfigures puppet.conf on target nodes to point to the target Puppet primary.
+* Deletes local agent certificate and ca.pem file.
+* Reboots Puppet service on target.
+* Purges target node from source primary server.
 
-* Files, packages, services, or operations that the module will alter, impact,
-  or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section here.
+**Warning:** Do not migrate Puppet infrastructure components. This will break your Puppet installation. A built in check has been included to avoid this situation which relies on the 'is_pe' fact.
 
 ### Beginning with migrate_nodes
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most basic
-use of the module.
+Include the module within your Puppetfile. 
+
+`mod 'benjaminrobertson-migrate_nodes'`
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your
-users how to use your module to solve problems, and be sure to include code
-examples. Include three to five examples of the most important or common tasks a
-user can accomplish with your module. Show users how to accomplish more complex
-tasks that involve different types, classes, and functions working in tandem.
+Run the plan **migrate_nodes::migrate_node** from the Puppet Enterprise console.
 
-## Reference
+**Required parameters**
+- origin_pe_primary_server (String - Agent certname)
+- target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specific multiple compilers)
 
-This section is deprecated. Instead, add reference information to your code as
-Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your
-module. For details on how to add code comments and generate documentation with
-Strings, see the [Puppet Strings documentation][2] and [style guide][3].
+**Optional parameters**
+- targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
+- fact_name (String)
+- fact_value (String)
+- ignore_infra_status_error (Boolean - Ignore errors from puppet infrastructure status command. May allow the plan to operate if some Puppet infrastructure components are failing)
+- bypass_connectivity_check (Boolean - Do not perform connectivity check to target Primary server)
+- noop (Boolean - Run the plan in noop. csr_attributes.yaml will still be generated, however nodes will not be migrated.)
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the
-root of your module directory and list out each of your module's classes,
-defined types, facts, functions, Puppet tasks, task plans, and resource types
-and providers, along with the parameters for each.
+**Note:** Either targets or fact_name/fact_value must be specified. Cannot specify both.
 
-For each element (class, defined type, function, and so on), list:
-
-* The data type, if applicable.
-* A description of what the element does.
-* Valid values, if the data type doesn't make it obvious.
-* Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
+To specific a trusted fact, use `trusted.extensions.pp_role` etc
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other
-warnings.
+Verified with the following OS\Primary combinations. Expected to work for all Windows, Enterprise Linux, Debian, Ubuntu versions. Expected to work with all modern Puppet Enterprise releases.
+
+Puppet Enterprise
+
+* 2021.7.6
+
+Puppet Nodes
+
+* Windows 2019
+* RHEL 8
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing
-to your project and how they should submit their work.
+If you find any issues with this module, please log them in the issues register of the GitHub project. [Issues][1]
+PR glady accepted :)
 
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel are
-necessary or important to include here. Please use the `##` header.
-
-[1]: https://puppet.com/docs/pdk/latest/pdk_generating_modules.html
-[2]: https://puppet.com/docs/puppet/latest/puppet_strings.html
-[3]: https://puppet.com/docs/puppet/latest/puppet_strings_style.html
+[1]: https://github.com/benjamin-robertson/migrate_nodes/issues
