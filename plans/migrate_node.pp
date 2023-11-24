@@ -73,7 +73,7 @@ plan migrate_nodes::migrate_node (
 
     # Enable long file path support on Windows.
     run_task('migrate_nodes::set_long_paths_windows', $windows_hosts,
-      '_noop'          => $noop,
+      'noop'          => $noop,
     '_catch_errors'  => true )
 
     # Confirm the origin_pe_primary_server provided is in fact the Primary server for this Puppet installation.
