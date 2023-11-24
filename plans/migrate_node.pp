@@ -97,7 +97,7 @@ plan migrate_node_to_another_primary::migrate_node (
     $set_csr_attriubes_done = $set_csr_attriubes_results.ok_set
     $set_csr_attriubes_done_names = $set_csr_attriubes_results.ok_set.names
     $set_csr_attriubes_failed = $set_csr_attriubes_results.error_set.names
-    $set_csr_attriubes_successful_targets = $supported_targets - get_targets(set_csr_attriubes_failed)
+    $set_csr_attriubes_successful_targets = $successful_connection_test_targets - get_targets(set_csr_attriubes_failed)
 
     # Update Puppet.conf
     $update_puppet_config_results = apply($set_csr_attriubes_successful_targets,
