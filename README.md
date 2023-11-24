@@ -59,8 +59,8 @@ To specific a trusted fact, use fact_name = `trusted.extensions.pp_role`.
 
 ## Limitations
 
-Verified with the following OS\Primary combinations. 
-Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions. 
+Verified with the following OS\Primary combinations. \\
+Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions. \\
 Expected to work with all modern Puppet Enterprise releases.
 
 Puppet Enterprise
