@@ -59,8 +59,12 @@ plan migrate_node_to_another_primary::migrate_node (
     $supported_targets = get_targets($full_list_success).filter | $target | {
       $target.facts['os']['family'] in $supported_platforms
     }
+    # remove any pe servers from targets, we dont support migrating puppet enterprise components.
+    $remove_any_pe_targets = get_targets($supported_targets).filter | $target | {
+      $target.facts['is_pe'] == false
+    }
 
-    out::message("Supported targets are ${supported_targets}")
+    out::message("Supported targets are ${remove_any_pe_targets}")
 
     $origin_pe_primary_target = get_target($origin_pe_primary_server)
 
@@ -85,7 +89,7 @@ plan migrate_node_to_another_primary::migrate_node (
     }
 
     # Test connection to new PE server
-    $connection_check_results = run_task('migrate_node_to_another_primary::check_pe_connection', $supported_targets, { 'target_pe_server' => $target_pe_first_address, 'bypass_connectivity_check' => $bypass_connectivity_check, '_catch_errors' => true })
+    $connection_check_results = run_task('migrate_node_to_another_primary::check_pe_connection', $remove_any_pe_targets, { 'target_pe_server' => $target_pe_first_address, 'bypass_connectivity_check' => $bypass_connectivity_check, '_catch_errors' => true })
     $successful_connection_test_targets = $connection_check_results.ok_set.names
     $failed_connection_test_targets = $connection_check_results.error_set.names
 
