@@ -1,5 +1,5 @@
 # enable long path support Windows 2016 or later.
-if ( $env:PT__noop == "true" ) {
+if ( $env:PT__noop -eq "true" ) {
     echo "Running in noop: bailing out"
     exit 0
 }
