@@ -2,8 +2,8 @@
 # 
 # lint:ignore:140chars
 #
-# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN. Use to purge migrated nodes. 
-# @param target_pe_address Target Puppet server, either compiler address or FQDN of Primary server.
+# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname). Use to purge migrated nodes. 
+# @param target_pe_address Target Puppet server, either compiler address or FQDN of Primary server. Use array to specific multiple compilers.
 # @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console). 
 #    NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 # @param fact_name Fact name to match nodes by.
@@ -66,6 +66,15 @@ plan migrate_nodes::migrate_node (
     out::message("Supported targets are ${remove_any_pe_targets}")
 
     $origin_pe_primary_target = get_target($origin_pe_primary_server)
+
+    $windows_hosts = get_targets($remove_any_pe_targets).filter | $target | {
+      $target.facts['os']['name'] == 'windows'
+    }
+
+    # Enable long file path support on Windows.
+    run_task('migrate_nodes::set_long_paths_windows', $windows_hosts,
+      '_noop'          => $noop,
+    '_catch_errors'  => true )
 
     # Confirm the origin_pe_primary_server provided is in fact the Primary server for this Puppet installation.
     $confirm_pe_primary_server_results = run_task('migrate_nodes::confirm_primary_server', $origin_pe_primary_target,

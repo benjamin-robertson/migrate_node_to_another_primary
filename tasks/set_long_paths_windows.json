@@ -1,0 +1,10 @@
+{
+    "description": "Enable long path support on Windows 2016 or later",
+    "input_method": "environment",
+    "supports_noop": true,
+    "implementations": [
+        {"name": "set_long_paths_windows.ps1", "requirements": ["powershell"]}
+    ],
+    "parameters": {
+    }
+}

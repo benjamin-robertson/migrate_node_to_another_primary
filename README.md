@@ -23,6 +23,7 @@ There is currently no fully automated process to migrate Puppet nodes between Pu
 
 This modules affects the following
 
+* Enables long file path support for Windows
 * Updates csr_attributes.yaml with facts currently present on the agent certificate.
 * Reconfigures puppet.conf on target nodes to point to the target Puppet primary.
 * Deletes local agent certificate and ca.pem file.
@@ -42,8 +43,8 @@ Include the module within your Puppetfile.
 Run the plan **migrate_nodes::migrate_node** from the Puppet Enterprise console.
 
 **Required parameters**
-- origin_pe_primary_server (String - Agent certname)
-- target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specific multiple compilers)
+- origin_pe_primary_server (String - Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname))
+- target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specific multiple compilers.)
 
 **Optional parameters**
 - targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
@@ -59,7 +60,7 @@ To specific a trusted fact, use `trusted.extensions.pp_role` etc
 
 ## Limitations
 
-Verified with the following OS\Primary combinations. Expected to work for all Windows, Enterprise Linux, Debian, Ubuntu versions. Expected to work with all modern Puppet Enterprise releases.
+Verified with the following OS\Primary combinations. Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions. Expected to work with all modern Puppet Enterprise releases.
 
 Puppet Enterprise
 
