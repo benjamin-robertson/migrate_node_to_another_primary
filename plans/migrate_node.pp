@@ -80,6 +80,7 @@ plan migrate_node_to_another_primary::migrate_node (
       $target_pe_merged = join($target_pe_address, ', ')
     } else {
       # We are a string
+      $target_pe_first_address = $target_pe_address
       $target_pe_merged = $target_pe_address
     }
 
