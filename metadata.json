@@ -2,7 +2,7 @@
   "name": "benjaminrobertson-migrate_nodes",
   "version": "0.1.0",
   "author": "benjaminrobertson",
-  "summary": "PE plan to migrate nodes to another PE server",
+  "summary": "PE plan to migrate nodes to another PE primary server",
   "license": "Apache-2.0",
   "source": "https://github.com/benjamin-robertson/migrate_nodes",
   "issues_url": "https://github.com/benjamin-robertson/migrate_nodes/issues",
