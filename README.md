@@ -69,13 +69,16 @@ Puppet Nodes
 
 * Windows 2019
 * RHEL 8
+* RHEL 9
 
-- Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions.
-- Expected to work with all modern Puppet Enterprise releases.
+Expected to work for all Windows 2016 or later, Enterprise Linux, Debian, Ubuntu versions.
+
+Expected to work with all modern Puppet Enterprise releases.
 
 ## Development
 
 If you find any issues with this module, please log them in the issues register of the GitHub project. [Issues][1]
+
 PR glady accepted :)
 
 [1]: https://github.com/benjamin-robertson/migrate_nodes/issues

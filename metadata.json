@@ -2,11 +2,15 @@
   "name": "benjaminrobertson-migrate_nodes",
   "version": "0.1.0",
   "author": "benjaminrobertson",
-  "summary": "",
+  "summary": "PE plan to migrate nodes to another PE server",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/benjamin-robertson/migrate_nodes",
+  "issues_url": "https://github.com/benjamin-robertson/migrate_nodes/issues",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 5.2.0 < 10.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -18,37 +22,47 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "8"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
-      "operatingsystem": "Scientific",
+      "operatingsystem": "Rocky",
       "operatingsystemrelease": [
-        "7"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04"
+        "18.04",
+        "20.04",
+        "22.04"
       ]
     },
     {
       "operatingsystem": "windows",
       "operatingsystemrelease": [
+        "2016",
         "2019",
+        "2022",
         "10"
       ]
     }
