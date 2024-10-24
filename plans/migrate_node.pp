@@ -14,7 +14,7 @@
 #
 plan migrate_nodes::migrate_node (
   Variant[String,Array] $target_pe_address,
-  String                $origin_pe_primary_server  = undef,
+  Optional[String]      $origin_pe_primary_server  = undef,
   Optional[TargetSpec]  $targets                   = undef,
   Optional[String]      $fact_name                 = undef,
   Optional[String]      $fact_value                = undef,
