@@ -75,7 +75,7 @@ plan migrate_nodes::migrate_node (
         $origin_pe_primary_target = get_target($pe_target_certname)
       }
     } else {
-      $origin_pe_primary_target = get_target($pe_primary_server)
+      $origin_pe_primary_target = get_target($origin_pe_primary_server)
     }
 
     $windows_hosts = get_targets($remove_any_pe_targets).filter | $target | {
