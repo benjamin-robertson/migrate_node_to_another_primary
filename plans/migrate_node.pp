@@ -172,7 +172,7 @@ plan migrate_nodes::migrate_node (
     $failed_clear_ssl_cert = $clear_ssl_cert_results.error_set.names
 
     # Purge nodes on PE master
-    $origin_pe_target = get_targets($origin_pe_primary_server)
+    $origin_pe_target = get_targets($origin_pe_primary_target)
     $node_to_purge = $successful_clear_ssl_cert.reduce | String $orig, String $node | { "${orig} ${node} " }
     out::message("Nodes to purge are: ${node_to_purge}")
     if $node_to_purge != undef {
