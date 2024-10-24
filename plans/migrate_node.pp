@@ -2,19 +2,19 @@
 # 
 # lint:ignore:140chars
 #
-# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname). Use to purge migrated nodes. 
+# @param origin_pe_primary_server Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname). Use to purge migrated nodes.
 # @param target_pe_address Target Puppet server, either compiler address or FQDN of Primary server. Use array to specific multiple compilers.
-# @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console). 
+# @param targets The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
 #    NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 # @param fact_name Fact name to match nodes by.
-# @param fact_value Fact value the fact must match. 
+# @param fact_value Fact value the fact must match.
 #    NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
-# @param noop Run the plan in noop mode. Make no changes. 
+# @param noop Run the plan in noop mode. Make no changes.
 # @param bypass_connectivity_check Do not check for connectivity to target PE server.
 #
 plan migrate_nodes::migrate_node (
-  String                $origin_pe_primary_server,
   Variant[String,Array] $target_pe_address,
+  String                $origin_pe_primary_server  = undef,
   Optional[TargetSpec]  $targets                   = undef,
   Optional[String]      $fact_name                 = undef,
   Optional[String]      $fact_value                = undef,
@@ -42,9 +42,8 @@ plan migrate_nodes::migrate_node (
 
   unless $full_list.empty {
     # Check connection to hosts. run_plan does not exit cleanly if there is a host which doesnt exist or isnt connected, We use this task
-    # to check if hosts are valid and have a valid connection to PE. This can be switched to a faster running task to speed up plan 
-    # execution as we do not actually use the results from this task.
-    $factresults = run_task(facts, $full_list, _catch_errors => true)
+    # to check if hosts are valid and have a valid connection to PE. 
+    $factresults = run_task(enterprise_tasks::test_connect, $full_list, _catch_errors => true)
 
     $full_list_failed = $factresults.error_set.names
     $full_list_success = $factresults.ok_set.names
@@ -65,7 +64,19 @@ plan migrate_nodes::migrate_node (
 
     out::message("Supported targets are ${remove_any_pe_targets}")
 
-    $origin_pe_primary_target = get_target($origin_pe_primary_server)
+    # Get primary server
+    if $origin_pe_primary_server == undef {
+      $pe_status_results = puppetdb_query('inventory[certname] { facts.pe_status_check_role = "primary" }')
+      if $pe_status_results.length != 1 {
+        fail("Could not identify the primary server. Confirm pe_status_check_role fact is working correctly. Alternatively the priamry server can be set via the pe_primary_server parameter. Results: ${pe_role_results}")
+      } else {
+        # We found a single primary server :)
+        $pe_target_certname = $pe_status_results.map | Hash $node | { $node['certname'] }
+        $origin_pe_primary_target = get_target($pe_target_certname)
+      }
+    } else {
+      $origin_pe_primary_target = get_target($pe_primary_server)
+    }
 
     $windows_hosts = get_targets($remove_any_pe_targets).filter | $target | {
       $target.facts['os']['name'] == 'windows'

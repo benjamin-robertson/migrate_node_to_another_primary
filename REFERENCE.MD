@@ -14,7 +14,7 @@
 
 ### Plans
 
-* [`migrate_nodes::migrate_node`](#migrate_nodesmigrate_node): PE plan to migrate nodes to another PE server
+* [`migrate_nodes::migrate_node`](#migrate_nodes--migrate_node): PE plan to migrate nodes to another PE server
 
 ## Tasks
 
@@ -100,7 +100,7 @@ Enable long path support on Windows 2016 or later
 
 ## Plans
 
-### <a name="migrate_nodesmigrate_node"></a>`migrate_nodes::migrate_node`
+### <a name="migrate_nodes--migrate_node"></a>`migrate_nodes::migrate_node`
 
 lint:ignore:140chars
 
@@ -108,74 +108,76 @@ lint:ignore:140chars
 
 The following parameters are available in the `migrate_nodes::migrate_node` plan:
 
-* [`origin_pe_primary_server`](#origin_pe_primary_server)
-* [`target_pe_address`](#target_pe_address)
-* [`targets`](#targets)
-* [`fact_name`](#fact_name)
-* [`fact_value`](#fact_value)
-* [`noop`](#noop)
-* [`bypass_connectivity_check`](#bypass_connectivity_check)
-* [`ignore_infra_status_error`](#ignore_infra_status_error)
+* [`origin_pe_primary_server`](#-migrate_nodes--migrate_node--origin_pe_primary_server)
+* [`target_pe_address`](#-migrate_nodes--migrate_node--target_pe_address)
+* [`targets`](#-migrate_nodes--migrate_node--targets)
+* [`fact_name`](#-migrate_nodes--migrate_node--fact_name)
+* [`fact_value`](#-migrate_nodes--migrate_node--fact_value)
+* [`noop`](#-migrate_nodes--migrate_node--noop)
+* [`bypass_connectivity_check`](#-migrate_nodes--migrate_node--bypass_connectivity_check)
+* [`ignore_infra_status_error`](#-migrate_nodes--migrate_node--ignore_infra_status_error)
 
-##### <a name="origin_pe_primary_server"></a>`origin_pe_primary_server`
+##### <a name="-migrate_nodes--migrate_node--origin_pe_primary_server"></a>`origin_pe_primary_server`
 
 Data type: `String`
 
 Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname). Use to purge migrated nodes.
 
-##### <a name="target_pe_address"></a>`target_pe_address`
+Default value: `undef`
+
+##### <a name="-migrate_nodes--migrate_node--target_pe_address"></a>`target_pe_address`
 
 Data type: `Variant[String,Array]`
 
 Target Puppet server, either compiler address or FQDN of Primary server. Use array to specific multiple compilers.
 
-##### <a name="targets"></a>`targets`
+##### <a name="-migrate_nodes--migrate_node--targets"></a>`targets`
 
 Data type: `Optional[TargetSpec]`
 
 The targets to run on (note this must match the certnames used by Puppet / shown in PE console).
 NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="fact_name"></a>`fact_name`
+##### <a name="-migrate_nodes--migrate_node--fact_name"></a>`fact_name`
 
 Data type: `Optional[String]`
 
 Fact name to match nodes by.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="fact_value"></a>`fact_value`
+##### <a name="-migrate_nodes--migrate_node--fact_value"></a>`fact_value`
 
 Data type: `Optional[String]`
 
 Fact value the fact must match.
 NOTE: you may ONLY specify target or fact_value. Specifying both will cause the plan to fail.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="noop"></a>`noop`
+##### <a name="-migrate_nodes--migrate_node--noop"></a>`noop`
 
 Data type: `Boolean`
 
 Run the plan in noop mode. Make no changes.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="bypass_connectivity_check"></a>`bypass_connectivity_check`
+##### <a name="-migrate_nodes--migrate_node--bypass_connectivity_check"></a>`bypass_connectivity_check`
 
 Data type: `Boolean`
 
 Do not check for connectivity to target PE server.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ignore_infra_status_error"></a>`ignore_infra_status_error`
+##### <a name="-migrate_nodes--migrate_node--ignore_infra_status_error"></a>`ignore_infra_status_error`
 
 Data type: `Boolean`
 
 
 
-Default value: ``false``
+Default value: `false`
 

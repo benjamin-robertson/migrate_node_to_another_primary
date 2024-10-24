@@ -1,6 +1,6 @@
 {
   "name": "benjaminrobertson-migrate_nodes",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "benjaminrobertson",
   "summary": "PE plan to migrate nodes to another PE primary server",
   "license": "Apache-2.0",
@@ -55,7 +55,8 @@
       "operatingsystemrelease": [
         "18.04",
         "20.04",
-        "22.04"
+        "22.04",
+        "24.04"
       ]
     },
     {
@@ -64,17 +65,18 @@
         "2016",
         "2019",
         "2022",
-        "10"
+        "10",
+        "11"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
-  "pdk-version": "3.0.0",
-  "template-url": "pdk-default#3.0.0",
-  "template-ref": "tags/3.0.0-0-g056e50d"
+  "pdk-version": "3.3.0",
+  "template-url": "pdk-default#3.3.0",
+  "template-ref": "tags/3.3.0-0-g5d17ec1"
 }
