@@ -7,8 +7,8 @@ All notable changes to this project will be documented in this file.
 **Features**
 
 - Added support Puppet 8.
-- Migrate_node plan will now automatically locates the origin primary server.
-- Add lint test to github actions.
+- Migrate_node plan will now automatically locate the origin primary server.
+- Added lint test to github actions.
 
 ## Release 0.1.0
 
