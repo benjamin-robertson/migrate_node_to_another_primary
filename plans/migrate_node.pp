@@ -1,4 +1,4 @@
-# @summary PE plan to migrate nodes to another PE server
+# @summary PE plan to migrate nodes to another PE server.
 # 
 # lint:ignore:140chars
 #
@@ -94,7 +94,7 @@ plan migrate_nodes::migrate_node (
     '_catch_errors'               => true )
     $ok_set_length = length("${confirm_pe_primary_server_results.ok_set}")
     if length("${confirm_pe_primary_server_results.ok_set}") <= 2 {
-      fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${pe_server_target.name} ")
+      fail_plan("Primary server provided not the primary server for this Puppet Enterprise installation: ${origin_pe_primary_target.name} ")
     }
 
     # Check if target pe address is an array. If so we test the first address only.
