@@ -42,11 +42,11 @@ Include the module within your Puppetfile.
 Run the plan **migrate_nodes::migrate_node** from the Puppet Enterprise console.
 
 **Required parameters**
-- origin_pe_primary_server (String - Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname))
 - target_pe_address (Array/Sting - either compiler address or FQDN of Primary server. Use array to specify multiple compilers.)
 
 **Optional parameters**
 - targets (TargetSpec - [see here](https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#targetspec))
+- origin_pe_primary_server (String - Puppet Primary server the node is being migrated from. Must match Primary server FQDN(Certname))
 - fact_name (String)
 - fact_value (String)
 - ignore_infra_status_error (Boolean - Ignore errors from puppet infrastructure status command. May allow the plan to operate if some Puppet infrastructure components are failing)
@@ -64,10 +64,13 @@ Verified with the following OS\Primary combinations.
 Puppet Enterprise
 
 * 2021.7.6
+* 2021.7.9
+* 2023.8.0
 
 Puppet Nodes
 
 * Windows 2019
+* Windows 2022
 * RHEL 8
 * RHEL 9
 
